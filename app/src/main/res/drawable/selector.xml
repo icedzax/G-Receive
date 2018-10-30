@@ -2,10 +2,14 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:state_pressed="true"
-        android:color="#a0dcfd"
-        ></item>
+        android:drawable="@drawable/red">
+
+    </item>
     <item android:state_selected="true"
-        android:color="#fff2c6"></item>
+        android:drawable="@drawable/blue">
+
+    </item>
+    <item   android:drawable="@drawable/pwhite"/>
 
 </selector>
 
