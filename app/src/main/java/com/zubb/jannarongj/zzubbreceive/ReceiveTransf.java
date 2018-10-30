@@ -205,18 +205,18 @@ public class ReceiveTransf extends AppCompatActivity  {
                 } else {
                     AlertDialog.Builder builder =
                             new AlertDialog.Builder(ReceiveTransf.this);
-                    builder.setMessage("ลบรายการ " + tab_hn + "-"+ tab_bun+" หรือไม่ ?");
-                    builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
+                    builder.setMessage("ลบรายการ " + tab_hn +" หรือไม่ ?");
+                    builder.setPositiveButton("ยกเลิก", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            DeleteItem deletePro = new DeleteItem();
-                            deletePro.execute(tab_id);
-
+                            dialog.dismiss();
                         }
                     });
-                    builder.setNegativeButton("ยกเลิก", new DialogInterface.OnClickListener() {
+                    builder.setNegativeButton("ตกลง", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //dialog.dismiss();
+                            DeleteItem deletePro = new DeleteItem();
+                            deletePro.execute(tab_id);
+                            dialog.dismiss();
                         }
                     });
                     builder.show();
@@ -246,9 +246,7 @@ public class ReceiveTransf extends AppCompatActivity  {
 
         });
 
-
     }
-
 
 
     @Override
@@ -455,9 +453,6 @@ public class ReceiveTransf extends AppCompatActivity  {
         }
     }
 
-
-
-
     public class FillList extends AsyncTask<String, String, String> {
 
         String z = "";
@@ -517,9 +512,9 @@ public class ReceiveTransf extends AppCompatActivity  {
                     String t_charge = (String) obj.get("charge");
                     String t_bundle = (String) obj.get("bundle");
 
-                   /* tab_hn = t_charge;
+                    tab_hn = t_charge;
                     tab_id = t_id;
-                    tab_bun = t_bundle;*/
+                    tab_bun = t_bundle;
 
                     arg1.setSelected(true);
 

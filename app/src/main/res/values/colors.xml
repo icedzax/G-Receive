@@ -15,6 +15,7 @@
 
     <drawable name="red"> #FA032C</drawable>
     <drawable name="blue"> #5c97e0</drawable>
+    <drawable name="yellow">#fff6c1</drawable>
     <drawable name="tk1">#b7d7ff</drawable>
     <drawable name="tk2">#ffd500</drawable>
 
