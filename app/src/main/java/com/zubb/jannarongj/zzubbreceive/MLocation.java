@@ -3,22 +3,22 @@ package com.zubb.jannarongj.zzubbreceive;
 import java.util.Arrays;
 import java.util.List;
 
-import static java.lang.Integer.parseInt;
 
 /**
  * Created by jannarong.j on 10/22/2018.
  */
 
-public class MLocation {
-    private String pill ="";
-    private String lr = "";
-    private String fr = "";
-    private String ch = "";
-    private String cloc = "";
+public class MLocation extends CurLocation{
 
 
-
+    private  String pill ="";
+    private  String lr = "";
+    private  String fr = "";
+    private  String ch = "";
+    private  String cloc = "";
     private Boolean curLoc = false;
+
+    CurLocation cl ;
 
 
     public String getCloc() {
@@ -26,10 +26,13 @@ public class MLocation {
     }
 
     public void setCloc(String cloc) {
+        cl = new CurLocation();
         if(getCh().equals("10")){
             this.cloc = "A"+cloc.substring(2,cloc.length());
+            cl.setCurlocation("A"+cloc.substring(2,cloc.length()));
         }else{
             this.cloc = cloc;
+            cl.setCurlocation(cloc);
         }
 
     }
@@ -106,11 +109,14 @@ public class MLocation {
     }
 
     public void setPill(String pill) {
+        cl = new CurLocation();
 
         if(numPilList.contains(pill)){
             this.pill = "0"+pill;
+            cl.setPill("0"+pill);
         }else{
             this.pill = pill;
+            cl.setPill(pill);
         }
 
     }
@@ -120,7 +126,9 @@ public class MLocation {
     }
 
     public void setLr(String lr) {
+        cl = new CurLocation();
         this.lr = lr;
+        cl.setLr(lr);
     }
 
     public String getFr() {
@@ -128,7 +136,9 @@ public class MLocation {
     }
 
     public void setFr(String fr) {
+        cl = new CurLocation();
         this.fr = fr;
+        cl.setFr(fr);
     }
 
     public String getCh() {
@@ -136,7 +146,9 @@ public class MLocation {
     }
 
     public void setCh(String ch) {
+        cl = new CurLocation();
         this.ch = ch;
+        cl.setCh(ch);
     }
 
 

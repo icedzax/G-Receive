@@ -57,8 +57,8 @@ import java.util.zip.Inflater;
 public class ReceiveTransf extends AppCompatActivity  {
 
     final Context context = this;
+    CurLocation cl;
     MLocation loc;
-    Raiserror raise;
     ConnectionClass connectionClass;
     UserHelper usrHelper;
     Version vers;
@@ -74,7 +74,7 @@ public class ReceiveTransf extends AppCompatActivity  {
     ForegroundColorSpan frcBlack = new ForegroundColorSpan(Color.BLACK);
 
     String itxt,user,ver,rmd_id,rmd_date,rmd_no,rmd_charge,r_bundle,r_qty,matcode,rmd_period,rmd_spec,rmd_size,rmd_grade,rmd_length,rmd_weight,rmd_qa_grade,rmd_remark,rmd_plant,rmd_station;
-
+    static String xfr,xrl,xch,xpil,xloc;
     String scanresult,g_vbeln,g_posnr,ch,pil;
     String dSize,dBar_id,dCharge,dBundle,dVbeln,dPonum,dUser,dStamp,dLocation;
     String h_vbeln,h_posnr,h_arktx,h_matnr,h_carlicense,h_kunnr,h_ar_name,tab_hn,tab_bun,tab_id;
@@ -155,7 +155,7 @@ public class ReceiveTransf extends AppCompatActivity  {
             g_posnr = (String) savedInstanceState.getSerializable("posnr");
 
         }
-        raise = new Raiserror();
+        cl = new CurLocation();
         loc = new MLocation();
         vers = new Version();
         usrHelper = new UserHelper(this);
@@ -180,6 +180,11 @@ public class ReceiveTransf extends AppCompatActivity  {
 
         user =  usrHelper.getUserName();
         ver = usrHelper.getVer();
+        if(cl.l==null || cl.l.equals("")){
+            txt_loc.setText("เลือกช่อง");
+        }else{
+            txt_loc.setText(cl.l);
+        }
 
         pbbar.setVisibility(View.GONE);
 
@@ -247,7 +252,6 @@ public class ReceiveTransf extends AppCompatActivity  {
         });
 
     }
-
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent KEvent)
@@ -747,25 +751,54 @@ public class ReceiveTransf extends AppCompatActivity  {
         txtRsLoc = (TextView)dialog.findViewById(R.id.txtRsLoc);
         btnLocSv = (Button)dialog.findViewById(R.id.btnLocSv);
 
-        if(loc.getCloc().equals("")){
+        if(loc.getCloc().equals("") && cl.l==null){
 
         }else{
-            locationChecker(loc.getFr(),loc.getLr(),loc.getCh(),loc.getPill());
-            checkCH(loc.getCh());
-            checkPIL(loc.getPill());
-            tx_ch.setText(loc.getCh());
-            tx_pil.setText(loc.getPill());
-            if(loc.getLr().equals("R")){
-                tx_rl.setText("ขวา");
+            if(cl.l==null || cl.l.equals("")){
+                locationChecker(loc.getFr(),loc.getLr(),loc.getCh(),loc.getPill());
+                checkCH(loc.getCh());
+                checkPIL(loc.getPill());
+                tx_ch.setText(loc.getCh());
+                tx_pil.setText(loc.getPill());
+
+                if(loc.getLr().equals("R")){
+                    tx_rl.setText("ขวา");
+                }else{
+                    tx_rl.setText("ซ้าย");
+                }
+                if(loc.getFr().equals("F")){
+                    tx_fr.setText("หน้า");
+                }else{
+                    tx_fr.setText("หลัง");
+                }
+                txtRsLoc.setText(loc.getCloc());
+
             }else{
-                tx_rl.setText("ซ้าย");
+                loc.setFr(cl.fr);
+                loc.setLr(cl.lr);
+                loc.setCh(cl.ch);
+                loc.setPill(cl.pill);
+
+                locationChecker(loc.getFr(),loc.getLr(),loc.getCh(),loc.getPill());
+                checkCH(loc.getCh());
+                checkPIL(loc.getPill());
+                tx_ch.setText(loc.getCh());
+                tx_pil.setText(loc.getPill());
+
+                if(loc.getLr().equals("R")){
+                    tx_rl.setText("ขวา");
+                }else{
+                    tx_rl.setText("ซ้าย");
+                }
+                if(loc.getFr().equals("F")){
+                    tx_fr.setText("หน้า");
+                }else{
+                    tx_fr.setText("หลัง");
+                }
+                txtRsLoc.setText(loc.getCloc());
+
             }
-            if(loc.getFr().equals("F")){
-                tx_fr.setText("หน้า");
-            }else{
-                tx_fr.setText("หลัง");
-            }
-            txtRsLoc.setText(loc.getCloc());
+
         }
 
         btnLocSv.setOnClickListener(new View.OnClickListener()
@@ -773,6 +806,11 @@ public class ReceiveTransf extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 txt_loc.setText(loc.getCloc());
+                xch =loc.getCh();
+                xfr =loc.getFr();
+                xrl =loc.getLr();
+                xpil =loc.getPill();
+                xloc = loc.getCloc();
                 dialog.dismiss();
 
             }
@@ -822,9 +860,49 @@ public class ReceiveTransf extends AppCompatActivity  {
             }
         });
 
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener()
+        {
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+                if(xch==null){
+                    xch="";
+                }
+                if(xrl==null){
+                    xrl="";
+                }
+                if(xfr==null){
+                    xfr="";
+                }
+                if(xpil==null){
+                    xpil="";
+                }
+                if(xloc==null){
+                    xloc="";
+                }
+                loc.setCh(xch);
+                loc.setPill(xpil);
+                loc.setLr(xrl);
+                loc.setFr(xfr);
+                loc.setCloc(xloc);
+
+                cl.setFr(xfr);
+                cl.setPill(xpil);
+                cl.setLr(xrl);
+                cl.setCh(xch);
+                cl.setCurlocation(xloc);
+
+                //Toast.makeText(ReceiveTransf.this, "fr "+xfr+"\nrl "+xrl+"\nch "+xch+"\npill "+xpil+"\nloc "+xloc, Toast.LENGTH_LONG).show();
+
+                //Toast.makeText(ReceiveTransf.this, "fr "+tx_fr.getText().toString()+"\nrl "+tx_rl.getText().toString()+"\nch "+tx_ch.getText().toString()+"\npill "+tx_pil.getText().toString()+"\nloc "+txtRsLoc.getText().toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(ReceiveTransf.this, "fr "+cl.fr+"\nrl "+cl.lr+"\nch "+cl.ch+"\npill "+cl.pill+"\nloc "+cl.l, Toast.LENGTH_LONG).show();
+                //Toast.makeText(ReceiveTransf.this, "FFRR "+loc.getFr()+"\nRRLL "+loc.getLr()+"\nCCHH "+loc.getCh()+"\nPP "+loc.getPill()+"\nLL "+loc.getCloc(), Toast.LENGTH_LONG).show();
+                //locationChecker(loc.getFr(),loc.getLr(),loc.getCh(),loc.getPill());
+
+            }
+        });
 
         dialog.show();
-
 
     }
 
@@ -938,6 +1016,23 @@ public class ReceiveTransf extends AppCompatActivity  {
             btnLocSv.setVisibility(View.GONE);
         }
         this.txtRsLoc.setText(loc.getCloc());
+
+    }
+
+    public void StaticlocationChecker(String pfr,String prl,String pch,String ppil){
+        Boolean isFound = false;
+        loc.setCloc(pch+""+pfr+""+prl+"-"+ppil.trim());
+        isFound = loc.checkLocation(cl.l);
+        if(isFound==true){
+            txtRsLoc.setTextColor(Color.parseColor("#00B94C"));
+            txtRsLoc.setBackgroundColor(Color.parseColor("#D0FFDC"));
+            btnLocSv.setVisibility(View.VISIBLE);
+        }else{
+            txtRsLoc.setTextColor(Color.parseColor("#FA032C"));
+            txtRsLoc.setBackgroundColor(Color.parseColor("#ffcfcc"));
+            btnLocSv.setVisibility(View.GONE);
+        }
+        this.txtRsLoc.setText(cl.l);
 
     }
 

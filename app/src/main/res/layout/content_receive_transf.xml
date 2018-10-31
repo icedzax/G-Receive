@@ -114,43 +114,56 @@
             android:id="@+id/headtable"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="@android:color/black"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/textView2"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="45dp"
                 android:gravity="center_vertical"
-                android:text="HEAT NO."
+                android:text="BATCH"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
-                android:textSize="17sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
-                android:text="QTY"
+                android:text="เส้น"
                 android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="17sp"
+                android:textColor="#e74200"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/xasdasd"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:gravity="center_vertical"
+                android:text="นน."
+                android:textAlignment="center"
+                android:textColor="#00c8ff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="WEIGHT"
+                android:text="ตำแหน่ง"
                 android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="17sp"
+                android:textColor="#f28900"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
