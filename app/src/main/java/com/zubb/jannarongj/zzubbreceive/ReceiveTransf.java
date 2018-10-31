@@ -68,7 +68,6 @@ public class ReceiveTransf extends AppCompatActivity  {
     ListView lvvbeln,lvitem;
     Button btnLocSv,btndelete;
     List<Map<String, String>> itemlist  = new ArrayList<Map<String, String>>();
-    List<Map<String, String>> vbelnlist  = new ArrayList<Map<String, String>>();
     View vxl ;
     ForegroundColorSpan frcRed = new ForegroundColorSpan(Color.RED);
     ForegroundColorSpan frcBlack = new ForegroundColorSpan(Color.BLACK);
@@ -533,15 +532,13 @@ public class ReceiveTransf extends AppCompatActivity  {
                             .getItem(arg2);
                     String qhn = obj.get("charge")+"-"+obj.get("bundle");
                     double qqty = Integer.parseInt((String) obj.get("qty"));
-                    double qweight = Integer.parseInt((String) obj.get("weight"));
+                    double qweight = Integer.parseInt((String) obj.get("rmd_weight"));
 
-                    /*tab_id = (String) obj.get("id");
-                    String qdf = (String) obj.get("defect");
-
+                    tab_id = (String) obj.get("id");
 
                     arg1.setSelected(true);
 
-                    adjQty(qhn,qqty,qweight,qdf);*/
+                   // adjQty(qhn,qqty,qweight);
 
                     return true;
                 }
@@ -629,6 +626,10 @@ public class ReceiveTransf extends AppCompatActivity  {
 
             return z;
         }
+    }
+        //Todo ADJ ONLONGCLICK METHOD !!!!!
+    public void adjQty(String id){
+
     }
 
     public class DeleteItem extends AsyncTask<String, String, String> {
@@ -893,7 +894,6 @@ public class ReceiveTransf extends AppCompatActivity  {
                 cl.setCurlocation(xloc);
 
                 //Toast.makeText(ReceiveTransf.this, "fr "+xfr+"\nrl "+xrl+"\nch "+xch+"\npill "+xpil+"\nloc "+xloc, Toast.LENGTH_LONG).show();
-
                 //Toast.makeText(ReceiveTransf.this, "fr "+tx_fr.getText().toString()+"\nrl "+tx_rl.getText().toString()+"\nch "+tx_ch.getText().toString()+"\npill "+tx_pil.getText().toString()+"\nloc "+txtRsLoc.getText().toString(), Toast.LENGTH_LONG).show();
                 //Toast.makeText(ReceiveTransf.this, "fr "+cl.fr+"\nrl "+cl.lr+"\nch "+cl.ch+"\npill "+cl.pill+"\nloc "+cl.l, Toast.LENGTH_LONG).show();
                 //Toast.makeText(ReceiveTransf.this, "FFRR "+loc.getFr()+"\nRRLL "+loc.getLr()+"\nCCHH "+loc.getCh()+"\nPP "+loc.getPill()+"\nLL "+loc.getCloc(), Toast.LENGTH_LONG).show();
@@ -1019,88 +1019,6 @@ public class ReceiveTransf extends AppCompatActivity  {
 
     }
 
-    public void StaticlocationChecker(String pfr,String prl,String pch,String ppil){
-        Boolean isFound = false;
-        loc.setCloc(pch+""+pfr+""+prl+"-"+ppil.trim());
-        isFound = loc.checkLocation(cl.l);
-        if(isFound==true){
-            txtRsLoc.setTextColor(Color.parseColor("#00B94C"));
-            txtRsLoc.setBackgroundColor(Color.parseColor("#D0FFDC"));
-            btnLocSv.setVisibility(View.VISIBLE);
-        }else{
-            txtRsLoc.setTextColor(Color.parseColor("#FA032C"));
-            txtRsLoc.setBackgroundColor(Color.parseColor("#ffcfcc"));
-            btnLocSv.setVisibility(View.GONE);
-        }
-        this.txtRsLoc.setText(cl.l);
-
-    }
-
-    public void onVbelnClick(View v){
-
-        final Dialog dialog = new Dialog(ReceiveTransf.this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.dialog_vbeln);
-
-        dialog.setCancelable(true);
-        Button pick = (Button)dialog.findViewById(R.id.btnPick);
-
-        pick.setOnClickListener(new View.OnClickListener() {
-            EditText doEdt = (EditText) dialog.findViewById(R.id.doEdt);
-            public void onClick(View v) {
-                txt_vbeln.setText(doEdt.getText().toString());
-                // paramcar = doEdt.getText().toString();
-                dialog.dismiss();
-            }
-        });
-        lvvbeln = (ListView) dialog.findViewById(R.id.lvcar);
-        String[] from = {"loc"};
-        int[] views = {R.id.r1 };
-        final SimpleAdapter ADA = new SimpleAdapter(ReceiveTransf.this,
-                vbelnlist, R.layout.adp_list_vbeln, from,
-                views){
-
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent){
-                View view = super.getView(position,convertView,parent);
-                if(position %2 == 1)
-                {
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                }
-                else
-                {
-                    view.setBackgroundColor(Color.parseColor("#F6F6F6"));
-                }
-                return view;
-            }
-        };
-
-        lvvbeln.setAdapter(ADA);
-        lvvbeln.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1,
-                                    int arg2, long arg3) {
-                HashMap<String, Object> obj = (HashMap<String, Object>) ADA
-                        .getItem(arg2);
-                String scar = (String) obj.get("loc");
-                String strb = (String) obj.get("Storage_Bin");
-
-                Animation animation1 = new AlphaAnimation(0.3f, 1.0f);
-                animation1.setDuration(2000);
-                arg1.startAnimation(animation1);
-
-              /*  FillList fillList = new FillList();
-                fillList.execute(storagebin);
-*/
-                dialog.dismiss();
-
-            }
-
-        });
-
-        dialog.show();
-    }
 
 
 }
