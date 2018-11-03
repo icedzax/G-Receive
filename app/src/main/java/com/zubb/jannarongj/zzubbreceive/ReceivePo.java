@@ -4,61 +4,43 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-
 import android.graphics.Color;
-import android.location.Location;
-import android.location.LocationListener;
-
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
+import android.support.v7.widget.Toolbar;
 import android.text.SpannableString;
 import android.text.Spanned;
-import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.FileFilter;
-import java.security.interfaces.RSAKey;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.zip.Inflater;
 
-public class ReceiveTransf extends AppCompatActivity  {
+public class ReceivePo extends AppCompatActivity {
 
     final Context context = this;
     CurLocation cl;
@@ -136,26 +118,26 @@ public class ReceiveTransf extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_receive_transf);
+        setContentView(R.layout.activity_receive_po);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         if (savedInstanceState == null) {
             Bundle extras = getIntent().getExtras();
             if (extras == null) {
 
                 g_vbeln = null;
-                g_posnr = null;
+
 
 
             } else {
 
                 g_vbeln = extras.getString("vbeln").trim();
-                g_posnr = extras.getString("posnr").trim();
+
             }
 
         } else {
 
             g_vbeln = (String) savedInstanceState.getSerializable("vbeln");
-            g_posnr = (String) savedInstanceState.getSerializable("posnr");
+
 
         }
         cl = new CurLocation();
@@ -179,7 +161,7 @@ public class ReceiveTransf extends AppCompatActivity  {
         loc.setLr("L");
 
         FillList fillList = new FillList();
-        fillList.execute((g_vbeln.trim().substring(0,g_vbeln.trim().indexOf("-"))),g_posnr.trim());
+        fillList.execute(g_vbeln.trim());
 
         user =  usrHelper.getUserName();
         ver = usrHelper.getVer();
@@ -200,7 +182,7 @@ public class ReceiveTransf extends AppCompatActivity  {
 
                 if (tab_hn == null) {
                     AlertDialog.Builder builder =
-                            new AlertDialog.Builder(ReceiveTransf.this);
+                            new AlertDialog.Builder(ReceivePo.this);
                     builder.setMessage("กรุณาเลือกรายการที่จะลบ");
                     builder.setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -212,7 +194,7 @@ public class ReceiveTransf extends AppCompatActivity  {
 
                 } else {
                     AlertDialog.Builder builder =
-                            new AlertDialog.Builder(ReceiveTransf.this);
+                            new AlertDialog.Builder(ReceivePo.this);
                     builder.setMessage("ลบรายการ " + tab_hn +" หรือไม่ ?");
                     builder.setPositiveButton("ยกเลิก", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
@@ -306,9 +288,9 @@ public class ReceiveTransf extends AppCompatActivity  {
             if(isSuccess==true) {
 
                 FillList fillList = new FillList();
-                fillList.execute((g_vbeln.trim().substring(0,g_vbeln.trim().indexOf("-"))),g_posnr.trim());
+                fillList.execute(g_vbeln.trim());
 
-                Toast.makeText(ReceiveTransf.this, z, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReceivePo.this, z, Toast.LENGTH_SHORT).show();
             }else{
                 //onErrorDialog(raise.geteDup(),raise.getNotFound(),raise.geteMis(),raise.geteNmat(),raise.geteNlocS());
                 onErrorDialog(getErDup(),getErNf(),getErMm(),getErNm(),getErNl());
@@ -319,7 +301,7 @@ public class ReceiveTransf extends AppCompatActivity  {
                 Log.d("e1NM", String.valueOf(getErNm()));
                 Log.d("e1NL", String.valueOf(getErNl()));*/
 
-               // Toast.makeText(ReceiveTransf.this, z, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ReceiveTransf.this, z, Toast.LENGTH_SHORT).show();
 
             }
             pbbar.setVisibility(View.GONE);
@@ -405,7 +387,7 @@ public class ReceiveTransf extends AppCompatActivity  {
                         }
 
                         if(loc.getCurLoc()==false){
-                           setErNl(1);
+                            setErNl(1);
                         }
 
                         if(matcode==null || matcode.equals("")){
@@ -429,11 +411,11 @@ public class ReceiveTransf extends AppCompatActivity  {
 
                         if(getErDup()==0 && getErNf()==0 &&getErMm()==0 &&getErNm()==0 &&getErNl()==0){
 
-                            String insrt = "insert into tbl_receive (vbeln,posnr,ponum,carlicense,item_barcode,rmd_id,rmd_date,rmd_no,charge " +
+                            String insrt = "insert into tbl_receive (ponum,item_barcode,rmd_id,rmd_date,rmd_no,charge " +
                                     ",bundle,qty,matcode,location,rmd_period,rmd_spec,rmd_size,rmd_grade,rmd_length " +
                                     ",rmd_weight,rmd_qa_grade,rmd_remark,rmd_plant,rmd_station,user_add,add_stamp) " +
 
-                                    "values ('"+h_vbeln+"','"+h_posnr+"',NULL,'"+h_carlicense+"','"+params[0].trim()+"','"+rmd_id+"','"+rmd_date+"'" +
+                                    "values ('"+h_vbeln+"','"+params[0].trim()+"','"+rmd_id+"','"+rmd_date+"'" +
                                     ",'"+rmd_no+"','"+rmd_charge+"','"+r_bundle+"','"+r_qty+"','"+matcode+"','"+loc.getCloc()+"','"+rmd_period+"'" +
                                     ",'"+rmd_spec+"','"+rmd_size+"','"+rmd_grade+"','"+rmd_length+"','"+rmd_weight+"','"+rmd_qa_grade+"'" +
                                     ",'"+rmd_remark+"','"+rmd_plant+"','"+rmd_station+"','"+user+"_"+ver+"',current_timestamp)";
@@ -452,9 +434,9 @@ public class ReceiveTransf extends AppCompatActivity  {
 
             } catch (Exception ex) {
                 isSuccess = false;
-               // z = ex.getMessage().toString();
+                // z = ex.getMessage().toString();
                 itxt = ex.getMessage().toString();
-                }
+            }
 
             return z ;
         }
@@ -473,33 +455,33 @@ public class ReceiveTransf extends AppCompatActivity  {
 
         @Override
         protected void onPostExecute(String r) {
-                String stext  = h_vbeln+"-"+h_posnr;
-                int start = stext.trim().indexOf("-")+1;
-                int end = stext.trim().length();
+            String stext  = h_vbeln;
+            int start = stext.trim().indexOf("-")+1;
+            int end = stext.trim().length();
 
-                SpannableString svbeln = new SpannableString(stext.trim());
-                //SpannableStringBuilder  bvblen = new SpannableStringBuilder(stext);
-                svbeln.setSpan(frcRed,start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                svbeln.setSpan(frcBlack,start-1,start, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            SpannableString svbeln = new SpannableString(stext.trim());
+            //SpannableStringBuilder  bvblen = new SpannableStringBuilder(stext);
+            svbeln.setSpan(frcRed,start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            svbeln.setSpan(frcBlack,start-1,start, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                txt_vbeln.setText(svbeln);
-                txt_ar_name.setText(h_ar_name);
-                txt_arktx.setText(h_arktx);
-                //txt_wadat.setText(h_wadat);
-                txt_carlicense.setText(h_carlicense);
+            txt_vbeln.setText(svbeln);
+            txt_ar_name.setText(h_ar_name);
+            txt_arktx.setText(h_arktx);
+            //txt_wadat.setText(h_wadat);
+            //txt_carlicense.setText(h_carlicense);
 
 
             String[] from = {"ids","charge","qty","rmd_weight","rmd_qa_grade","rmd_remark","location" };
             final int[] views = {R.id.id,R.id.charge,R.id.qty,R.id.weight,R.id.qa_grade,R.id.remark,R.id.location};
-            final SimpleAdapter ADA = new SimpleAdapter(ReceiveTransf.this,
+            final SimpleAdapter ADA = new SimpleAdapter(ReceivePo.this,
                     itemlist, R.layout.adp_listscan, from,
                     views) {
                 @Override
                 public View getView(final int position, View convertView, ViewGroup parent) {
                     View view = super.getView(position, convertView, parent);
                     TextView tvRemark = (TextView) view.findViewById(R.id.remark);
-                   if(itemlist.get(position).get("rmd_remark")==null || itemlist.get(position).get("rmd_remark").trim().equals("") || itemlist.get(position).get("rmd_remark").trim().equals("null")){
-                       tvRemark.setVisibility(View.GONE);
+                    if(itemlist.get(position).get("rmd_remark")==null || itemlist.get(position).get("rmd_remark").trim().equals("") || itemlist.get(position).get("rmd_remark").trim().equals("null")){
+                        tvRemark.setVisibility(View.GONE);
 
                     }
                     return view;
@@ -570,19 +552,17 @@ public class ReceiveTransf extends AppCompatActivity  {
 
                     if (!params[0].equals(null)) {
 
-                        where = "where vbeln = '" + params[0] + "' and posnr = '" + params[1] + "' ";
+                        where = " where ponum = '" + params[0] + "' ";
                     }
 
-                    String headqry = "select convert(nvarchar(20),cast(wadat as datetime),103) as wadat2 ,* from vw_shipment_zubb_mmt " + where;
+                    String headqry = "select * from vw_ponum " + where;
                     PreparedStatement hps = con.prepareStatement(headqry);
                     ResultSet hrs = hps.executeQuery();
 
                     while (hrs.next()) {
-                        h_vbeln = hrs.getString("vbeln");
-                        h_posnr = hrs.getString("posnr");
-                        h_kunnr = hrs.getString("KUNNR");
-                        h_ar_name = hrs.getString("AR_NAME");
-                        h_carlicense = hrs.getString("CARLICENSE");
+                        h_vbeln = hrs.getString("ponum");
+                        h_ar_name = hrs.getString("vendor");
+                        h_carlicense = hrs.getString("doc");
                         h_matnr = hrs.getString("MATNR");
                         h_arktx = hrs.getString("ARKTX");
 
@@ -646,10 +626,10 @@ public class ReceiveTransf extends AppCompatActivity  {
         protected void onPostExecute(String r) {
             pbbar.setVisibility(View.GONE);
 
-            Toast.makeText(ReceiveTransf.this, r, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReceivePo.this, r, Toast.LENGTH_SHORT).show();
 
             FillList fillList = new FillList();
-            fillList.execute((g_vbeln.trim().substring(0,g_vbeln.trim().indexOf("-"))),g_posnr.trim());
+            fillList.execute(g_vbeln.trim());
 
 
         }
@@ -676,15 +656,15 @@ public class ReceiveTransf extends AppCompatActivity  {
         }
     }
 
-        //Todo ADJ ONLONGCLICK METHOD !!!!!
+    //Todo ADJ ONLONGCLICK METHOD !!!!!
     public void adjQty(String hn,int qty){
 
-        final Dialog adjdialog = new Dialog(ReceiveTransf.this);
+        final Dialog adjdialog = new Dialog(ReceivePo.this);
         adjdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         adjdialog.setContentView(R.layout.dialog_adjust);
 
         adjdialog.setCancelable(true);
-        TextView thn ,tarktx,oqty;
+        TextView thn ,oqty,tarktx;
         EditText eqty;
         Button svbtn,cnbtn;
         thn = (TextView)adjdialog.findViewById(R.id.thn);
@@ -696,6 +676,7 @@ public class ReceiveTransf extends AppCompatActivity  {
         thn.setText(hn);
         eqty.setText("");
         tarktx.setText(h_arktx);
+
         oqty.setText(""+qty);
 
 
@@ -734,11 +715,11 @@ public class ReceiveTransf extends AppCompatActivity  {
         @Override
         protected void onPostExecute(String r) {
             pbbar.setVisibility(View.GONE);
-            Toast.makeText(ReceiveTransf.this, r, Toast.LENGTH_SHORT).show();
+            Toast.makeText(ReceivePo.this, r, Toast.LENGTH_SHORT).show();
             if(isSuccess==true) {
 
                 FillList fillList = new FillList();
-                fillList.execute((g_vbeln.trim().substring(0,g_vbeln.trim().indexOf("-"))),g_posnr.trim()); //Handle filter string
+                fillList.execute(g_vbeln.trim()); //Handle filter string
                 // Toast.makeText(MainActivity.this, filterp1+"\n"+filterp2, Toast.LENGTH_SHORT).show();
 
                 tab_hn = null;
@@ -806,9 +787,9 @@ public class ReceiveTransf extends AppCompatActivity  {
                 .setMessage(msg)
                 .setPositiveButton("ตกลง", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                            if(getErNl()==1){
-                                onLocationClick(vxl);
-                            }
+                        if(getErNl()==1){
+                            onLocationClick(vxl);
+                        }
                     }
                 })
                /* .setNegativeButton("ปิด", new DialogInterface.OnClickListener() {
@@ -827,7 +808,7 @@ public class ReceiveTransf extends AppCompatActivity  {
     public  void  onLocationClick(View v){
 
 
-        final Dialog dialog = new Dialog(ReceiveTransf.this);
+        final Dialog dialog = new Dialog(ReceivePo.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_location_picker);
         dialog.setCancelable(true);
@@ -910,7 +891,7 @@ public class ReceiveTransf extends AppCompatActivity  {
         {
             @Override
             public void onClick(View view) {
-               onChClick(view);
+                onChClick(view);
 
             }
         });
@@ -918,7 +899,7 @@ public class ReceiveTransf extends AppCompatActivity  {
             @Override
             public void onClick(View view) {
                 onPilClick(view);
-                
+
             }
         });
         tx_fr.setOnClickListener(new View.OnClickListener() {
@@ -934,7 +915,7 @@ public class ReceiveTransf extends AppCompatActivity  {
                     locationChecker(loc.getFr(),loc.getLr(),loc.getCh(),loc.getPill());
                 }
             }
-    });
+        });
         tx_rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -1038,7 +1019,7 @@ public class ReceiveTransf extends AppCompatActivity  {
 
     public  void  onPilClick(View v){
 
-        final Dialog dialog = new Dialog(ReceiveTransf.this);
+        final Dialog dialog = new Dialog(ReceivePo.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_pil_picker);
         dialog.setCancelable(true);

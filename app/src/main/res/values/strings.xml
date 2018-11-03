@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_receive_transf">ReceiveTransf</string>
     <string name="title_activity_transfer_list">TransferList</string>
+    <string name="title_activity_receive_po">ReceivePo</string>
+    <string name="title_activity_po_list">PoList</string>
+    <string name="title_activity_login">Login</string>
 </resources>

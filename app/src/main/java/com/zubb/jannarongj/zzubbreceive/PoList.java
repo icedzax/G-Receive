@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,11 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -28,19 +24,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TransferList extends AppCompatActivity implements TextWatcher {
+public class PoList extends AppCompatActivity implements TextWatcher {
 
     final Context context = this;
     ConnectionClass connectionClass;
@@ -60,7 +53,7 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transfer_list);
+        setContentView(R.layout.activity_po_list);
 
         vers = new Version();
         usrHelper = new UserHelper(this);
@@ -72,6 +65,7 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
         btnVeln =(Button)findViewById(R.id.btnvbeln);
         lnse = (LinearLayout)findViewById(R.id.lnse);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
         pbbar.setVisibility(View.GONE);
 
 
@@ -134,9 +128,9 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
         @Override
         protected void onPostExecute(String r) {
 
-            String[] from = {"VBELN","ARKTX","POSNR","CARLICENSE" };
-            int[] views = {R.id.vbeln,R.id.arktx,R.id.posnr,R.id.carlicense};
-            ADA = new SimpleAdapter(TransferList.this,
+            String[] from = {"ponum","ARKTX" };
+            int[] views = {R.id.vbeln,R.id.arktx};
+            ADA = new SimpleAdapter(PoList.this,
                     vbelnlist, R.layout.adp_listitem, from,
                     views);
             list_vbeln.setAdapter(ADA);
@@ -149,9 +143,8 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                             .getItem(arg2);
                     arg1.setSelected(true);
 
-                    Intent i = new Intent(TransferList.this, ReceiveTransf.class);
-                    i.putExtra("vbeln", (String) obj.get("VBELN"));
-                    i.putExtra("posnr", (String) obj.get("POSNR"));
+                    Intent i = new Intent(PoList.this, ReceivePo.class);
+                    i.putExtra("vbeln", (String) obj.get("ponum"));
 
                     //Toast.makeText(TransferList.this, (String) obj.get("POSNR"), Toast.LENGTH_SHORT).show();
 
@@ -177,12 +170,11 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                     if(params[0]==null || params[0].equals("")){
                         where = "";
                     }else{
-                        where = " where VBELN like '%"+params[0].trim()+"%' ";
+                        where = " where ponum like '%"+params[0].trim()+"%' ";
                     }
 
-                    String query = "SELECT convert(nvarchar(20),wadat,103) as wadat,VBELN,POSNR,KUNNR,AR_NAME,CARLICENSE " +
-                            "      ,MATNR,ARKTX " +
-                            "  FROM vw_shipment_zubb_mmt " + where ;
+                    String query = "SELECT convert(nvarchar(20),docdate,103) as wadat,* " +
+                            "  FROM vw_ponum " + where ;
 
                     PreparedStatement ps = con.prepareStatement(query);
                     ResultSet rs = ps.executeQuery();
@@ -191,11 +183,9 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                     while (rs.next()) {
                         Map<String, String> datanums = new HashMap<String, String>();
                         datanums.put("wadat", rs.getString("wadat"));
-                        datanums.put("VBELN", rs.getString("VBELN")+"-"+rs.getString("POSNR"));
-                        datanums.put("POSNR", rs.getString("POSNR"));
-                        datanums.put("KUNNR", rs.getString("KUNNR"));
-                        datanums.put("AR_NAME", rs.getString("AR_NAME"));
-                        datanums.put("CARLICENSE", rs.getString("CARLICENSE"));
+                        datanums.put("ponum", rs.getString("ponum"));
+                        datanums.put("vendor", rs.getString("vendor"));
+                        datanums.put("doc", rs.getString("doc"));
                         datanums.put("MATNR",rs.getString("MATNR"));
                         datanums.put("ARKTX",rs.getString("ARKTX"));
 

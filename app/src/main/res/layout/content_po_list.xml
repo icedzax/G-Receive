@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.zubb.jannarongj.zzubbreceive.TransferList"
-    tools:showIn="@layout/activity_transfer_list">
+    tools:context="com.zubb.jannarongj.zzubbreceive.PoList"
+    tools:showIn="@layout/activity_po_list">
 
     <LinearLayout
         android:id="@+id/lnse"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="#2135b1"
             android:padding="2dp"
-            android:text="รับเข้าจากการโอนย้าย"
+            android:text="รับเข้าจากการซื้อ"
             android:textAlignment="center"
             android:textColor="#ffffff"
             android:textSize="18sp"

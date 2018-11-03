@@ -3,21 +3,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_vbeln"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
     android:padding="5dp"
     android:weightSum="1">
 
     <LinearLayout
+        android:id="@+id/lnx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.34"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:background="@drawable/border_black"
             android:gravity="center"
             android:orientation="horizontal">
@@ -54,7 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:background="@drawable/border_black"
             android:gravity="center"
             android:orientation="horizontal">
@@ -91,7 +89,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:background="@drawable/border_black"
             android:gravity="center"
             android:orientation="horizontal">
@@ -128,7 +125,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:background="@drawable/border_black"
             android:gravity="center"
             android:orientation="horizontal">
@@ -165,7 +161,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:orientation="horizontal">
 
             <TextView
@@ -185,7 +180,7 @@
         <Button
             android:id="@+id/btnLocSv"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/btnbg"
             android:gravity="center"
             android:text="OK"

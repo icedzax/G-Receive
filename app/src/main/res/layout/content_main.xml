@@ -27,10 +27,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@color/colorPrimary"
                 android:gravity="center"
                 android:text="รับเข้าจากการโอนย้าย"
-                android:textAlignment="center"
 
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -46,11 +48,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@android:color/background_light"
+                android:background="#e9b346"
                 android:gravity="center"
                 android:text="รับเข้าจากการซื้อ"
                 android:textAlignment="center"
-                android:textColor="#00cb5f"
+                android:textColor="#000000"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
