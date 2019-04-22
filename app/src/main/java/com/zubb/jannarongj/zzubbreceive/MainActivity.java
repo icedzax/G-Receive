@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tran,buy;
+    TextView tran,buy,re;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         tran = (TextView)findViewById(R.id.txtTransf);
         buy = (TextView)findViewById(R.id.txtBuy);
+        re = (TextView)findViewById(R.id.txtRe);
 
         tran.setOnClickListener(new View.OnClickListener() {
 
@@ -36,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        re.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, ReceiveList.class);
+                startActivity(i);
+            }
+        });
+
 
     }
 

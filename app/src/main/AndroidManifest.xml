@@ -18,13 +18,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReceiveTransf"
             android:label="@string/title_activity_receive_transf"
@@ -32,9 +26,7 @@
         <activity
             android:name=".TransferList"
             android:label="@string/title_activity_transfer_list"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReceivePo"
             android:label="@string/title_activity_receive_po"
@@ -42,10 +34,32 @@
         <activity
             android:name=".PoList"
             android:label="@string/title_activity_po_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Login"
             android:label="@string/title_activity_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".CheckVersion"
+            android:label="@string/title_activity_check_version"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ReceivePoSpn"
+            android:label="@string/title_activity_receive_po_spn"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReceiveTransfSpn"
+            android:label="@string/title_activity_receive_transf_spn"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReceiveList"
+            android:label="@string/title_activity_receive_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

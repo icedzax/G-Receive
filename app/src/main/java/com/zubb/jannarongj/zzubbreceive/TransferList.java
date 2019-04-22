@@ -148,14 +148,22 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                     HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(arg2);
                     arg1.setSelected(true);
+                    if(usrHelper.getPlant().equals("SPN")){
+                        Intent i = new Intent(TransferList.this, ReceiveTransfSpn.class);
+                        i.putExtra("vbeln", (String) obj.get("VBELN"));
+                        i.putExtra("posnr", (String) obj.get("POSNR"));
+                        startActivity(i);
+                    }else{
+                        Intent i = new Intent(TransferList.this, ReceiveTransf.class);
+                        i.putExtra("vbeln", (String) obj.get("VBELN"));
+                        i.putExtra("posnr", (String) obj.get("POSNR"));
+                        startActivity(i);
+                    }
 
-                    Intent i = new Intent(TransferList.this, ReceiveTransf.class);
-                    i.putExtra("vbeln", (String) obj.get("VBELN"));
-                    i.putExtra("posnr", (String) obj.get("POSNR"));
 
                     //Toast.makeText(TransferList.this, (String) obj.get("POSNR"), Toast.LENGTH_SHORT).show();
 
-                    startActivity(i);
+
 
                 }
             });
@@ -174,10 +182,23 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                     z = "Error in connection with SQL server";
                 } else {
                     String where = "";
+                    String plant = "";
+
+                    switch (usrHelper.getPlant()){
+                        case "ZUBB" : plant = "  WERKS_TO in ('1010','9010')  ";
+                            break;
+                        case "SPN" : plant = "  WERKS_TO in ('1050','9050') ";
+                            break;
+                        case "SPS" : plant = "  WERKS_TO in ('1040','9040') ";
+                            break;
+                        case "OPS" : plant = "  WERKS_TO in ('2010','9060','1020','9020') ";
+                            break;
+                    }
+
                     if(params[0]==null || params[0].equals("")){
-                        where = "";
+                        where = "where "+plant;
                     }else{
-                        where = " where VBELN like '%"+params[0].trim()+"%' ";
+                        where = " where "+plant+" and VBELN like '%"+params[0].trim()+"%' ";
                     }
 
                     String query = "SELECT convert(nvarchar(20),wadat,103) as wadat,VBELN,POSNR,KUNNR,AR_NAME,CARLICENSE " +

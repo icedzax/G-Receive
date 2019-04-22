@@ -25,6 +25,17 @@ public class MLocation extends CurLocation{
         return cloc;
     }
 
+    public void setSpnLoc(){
+        this.curLoc = true;
+    }
+
+    public void setSPNCloc(String cloc) {
+        cl = new CurLocation();
+            this.cloc = cloc;
+            cl.setCurlocation(cloc);
+
+    }
+
     public void setCloc(String cloc) {
         cl = new CurLocation();
         if(getCh().equals("10")){

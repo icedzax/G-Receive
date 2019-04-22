@@ -130,6 +130,51 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/l_we"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="-2dp"
+            android:background="@drawable/border_black"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="3dp">
+
+            <TextView
+                android:id="@+id/asddd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.11"
+                android:gravity="center"
+                android:text="น้ำหนัก : "
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/qweight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textColor="#0735ff"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/asdasdad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="kg."
+                android:textAlignment="center"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/l_adj"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

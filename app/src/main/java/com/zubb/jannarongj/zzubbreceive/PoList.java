@@ -142,14 +142,15 @@ public class PoList extends AppCompatActivity implements TextWatcher {
                     HashMap<String, Object> obj = (HashMap<String, Object>) ADA
                             .getItem(arg2);
                     arg1.setSelected(true);
-
-                    Intent i = new Intent(PoList.this, ReceivePo.class);
-                    i.putExtra("vbeln", (String) obj.get("ponum"));
-
-                    //Toast.makeText(TransferList.this, (String) obj.get("POSNR"), Toast.LENGTH_SHORT).show();
-
-                    startActivity(i);
-
+                    if(usrHelper.getPlant().equals("SPN")) {
+                        Intent i = new Intent(PoList.this, ReceivePoSpn.class);
+                        i.putExtra("vbeln", (String) obj.get("ponum"));
+                        startActivity(i);
+                    }else{
+                        Intent i = new Intent(PoList.this, ReceivePo.class);
+                        i.putExtra("vbeln", (String) obj.get("ponum"));
+                        startActivity(i);
+                    }
                 }
             });
             //Toast.makeText(TransferList.this, z, Toast.LENGTH_SHORT).show();

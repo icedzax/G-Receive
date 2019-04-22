@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,4 +8,240 @@
     tools:context="com.zubb.jannarongj.zzubbreceive.Login"
     tools:showIn="@layout/activity_login">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout4"
+        android:layout_below="@+id/linearLayout5"
+        android:layout_alignParentEnd="true">
+
+        <TextView
+            android:id="@+id/izetext"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:layout_centerInParent="true"
+            android:background="#AAE8FF"
+            android:ems="10"
+            android:gravity="left|center"
+            android:hint="รหัสพนักงาน"
+            android:paddingLeft="10dp"
+            android:password="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@color/txtlogin"
+            android:textColorLink="@color/hintlogin"
+            android:textSize="40dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout5">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout4"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout6"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/b7"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="7"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b8"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="8"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b9"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="9"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/b4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="4"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="5"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="6"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/b1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="1"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="2"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/b3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.32"
+                android:text="3"
+                android:textSize="50dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/b0"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="0.29"
+                android:text="0"
+                android:textSize="50dp" />
+
+            <Button
+                android:id="@+id/btnLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight=".69"
+                android:background="@drawable/btnbg"
+                android:text="SIGN IN"
+                android:textSize="40dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/ver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:textAlignment="textEnd"
+            android:textColor="@drawable/red"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dasd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="มีปัญหาการใช้งานติดเจ้าหน้าที่ IT โทร 1203"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/pbbar"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:indeterminate="false" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="260dp"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/bd"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_centerHorizontal="true"
+
+            android:layout_weight="1"
+            android:background="@drawable/ic_backspace_black_48dp"
+            android:textColor="#ffffff"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</RelativeLayout>
+

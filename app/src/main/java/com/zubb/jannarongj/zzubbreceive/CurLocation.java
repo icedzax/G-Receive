@@ -11,6 +11,8 @@ public class CurLocation {
     public static String lr ;
     public static String fr ;
     public static String ch ;
+    public static String lname ;
+
 
 
     public void setPill(String pill) {
@@ -31,6 +33,10 @@ public class CurLocation {
 
     public void setCurlocation(String loc) {
         this.l = loc;
+    }
+
+    public void setLname(String ln) {
+        this.lname = ln;
     }
 
 }

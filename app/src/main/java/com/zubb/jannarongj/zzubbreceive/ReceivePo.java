@@ -11,8 +11,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
 import android.view.ContextThemeWrapper;
 import android.view.KeyEvent;
@@ -332,7 +334,8 @@ public class ReceivePo extends AppCompatActivity {
                         setErNf(1);
 
                     }else{
-                        String checkDup = "Select top 1 * from tbl_receive where item_barcode = '" + params[0].trim() + "' order by add_stamp desc  ";
+                        String checkDup = "Select top 1 item_barcode,charge,bundle,user_add,add_stamp,location,vbeln,ponum,rmd_size,item_barcode from tbl_receive where item_barcode = '"+params[0].trim()+"' and vbeln = '"+h_vbeln+"' and posnr = '"+h_posnr+"'" ;
+
                         PreparedStatement cd = con.prepareStatement(checkDup);
                         ResultSet cdps = cd.executeQuery();
 
@@ -397,7 +400,8 @@ public class ReceivePo extends AppCompatActivity {
                             String smat = matcode.trim();
                             String hm,sm;
                             int mm = 3 ;
-                            if(hmat.substring(0,2).equals("BF") || hmat.substring(0,2).equals("BM")){
+                            if(hmat.substring(0,3).equals("RBF") || hmat.substring(0,3).equals("RBM") || hmat.substring(0,3).equals("DBM") || hmat.substring(0,3).equals("DBF")){
+
                                 mm = 1 ;
                             }
                             sm = smat.substring(0,mm)+""+smat.substring(5,smat.length());
@@ -409,6 +413,10 @@ public class ReceivePo extends AppCompatActivity {
                             }
                         }
 
+                        if(rmd_remark == null){
+                            rmd_remark ="";
+                        }
+
                         if(getErDup()==0 && getErNf()==0 &&getErMm()==0 &&getErNm()==0 &&getErNl()==0){
 
                             String insrt = "insert into tbl_receive (ponum,item_barcode,rmd_id,rmd_date,rmd_no,charge " +
@@ -418,7 +426,7 @@ public class ReceivePo extends AppCompatActivity {
                                     "values ('"+h_vbeln+"','"+params[0].trim()+"','"+rmd_id+"','"+rmd_date+"'" +
                                     ",'"+rmd_no+"','"+rmd_charge+"','"+r_bundle+"','"+r_qty+"','"+matcode+"','"+loc.getCloc()+"','"+rmd_period+"'" +
                                     ",'"+rmd_spec+"','"+rmd_size+"','"+rmd_grade+"','"+rmd_length+"','"+rmd_weight+"','"+rmd_qa_grade+"'" +
-                                    ",'"+rmd_remark+"','"+rmd_plant+"','"+rmd_station+"','"+user+"_"+ver+"',current_timestamp)";
+                                    ",'"+rmd_remark+"','"+usrHelper.getPlant()+"','"+rmd_station+"','"+user+"_"+ver+"',current_timestamp)";
 
                             PreparedStatement preparedStatement = con.prepareStatement(insrt);
                             preparedStatement.executeUpdate();
@@ -518,13 +526,13 @@ public class ReceivePo extends AppCompatActivity {
                             .getItem(arg2);
                     String qhn = String.valueOf(obj.get("charge"));
                     int qqty = Integer.parseInt((String) obj.get("qty"));
-                    //double qweight = Integer.parseInt((String) obj.get("rmd_weight"));
+                    double qweight = Integer.parseInt((String) obj.get("rmd_weight"));
 
                     tab_id = (String) obj.get("id");
 
                     arg1.setSelected(true);
 
-                    adjQty(qhn,qqty);
+                    adjQty(qhn,qqty,qweight);
 
                     return true;
                 }
@@ -567,7 +575,7 @@ public class ReceivePo extends AppCompatActivity {
                         h_arktx = hrs.getString("ARKTX");
 
                     }
-                    String itemquery = "SELECT id,charge,bundle,qty,rmd_weight,rmd_qa_grade,rmd_remark,location from tbl_receive " + where;
+                    String itemquery = "SELECT id,charge,bundle,qty,rmd_weight,rmd_qa_grade,rmd_remark,location from tbl_receive " + where + " order by add_stamp desc ";
                     PreparedStatement itemq = con.prepareStatement(itemquery);
                     ResultSet irs = itemq.executeQuery();
                     int ids = 0 ;
@@ -642,7 +650,7 @@ public class ReceivePo extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
-                    String query = "update tbl_receive set qty = '"+params[0]+"'  WHERE id = "+tab_id+"  ";
+                    String query = "update tbl_receive set qty = '"+params[0]+"' , rmd_weight = '"+params[1]+"'  WHERE id = "+tab_id+"  ";
                     PreparedStatement preparedStatement = con.prepareStatement(query);
                     preparedStatement.executeUpdate();
                     z = "แก้ไขเรียบร้อยแล้ว";
@@ -657,7 +665,7 @@ public class ReceivePo extends AppCompatActivity {
     }
 
     //Todo ADJ ONLONGCLICK METHOD !!!!!
-    public void adjQty(String hn,int qty){
+    public void adjQty(String hn, int qty, final Double weight){
 
         final Dialog adjdialog = new Dialog(ReceivePo.this);
         adjdialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -667,6 +675,7 @@ public class ReceivePo extends AppCompatActivity {
         TextView thn ,oqty,tarktx;
         EditText eqty;
         Button svbtn,cnbtn;
+        final TextView qweight = (TextView) adjdialog.findViewById(R.id.qweight);
         thn = (TextView)adjdialog.findViewById(R.id.thn);
         oqty= (TextView)adjdialog.findViewById(R.id.tv_oqty);
         eqty = (EditText) adjdialog.findViewById(R.id.eqty);
@@ -678,6 +687,34 @@ public class ReceivePo extends AppCompatActivity {
         tarktx.setText(h_arktx);
 
         oqty.setText(""+qty);
+
+        double mm = 0.0;
+
+        mm = (weight/qty);
+
+        qweight.setText(Math.round(weight)+"");
+        final double finalMm = mm;
+        eqty.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() != 0){
+                    qweight.setText(""+(Math.round(Double.parseDouble(String.valueOf(s))* finalMm)));
+                }else{
+                    qweight.setText(Math.round(weight)+"");
+                }
+
+            }
+        });
 
 
         svbtn.setOnClickListener(new View.OnClickListener() {
@@ -740,7 +777,7 @@ public class ReceivePo extends AppCompatActivity {
                     z = "Error in connection with SQL server";
                 } else {
 
-                    String query = "delete tbl_receive WHERE item_id = "+tab_id+"  ";
+                    String query = "delete tbl_receive WHERE id = "+tab_id+"  ";
                     PreparedStatement preparedStatement = con.prepareStatement(query);
                     preparedStatement.executeUpdate();
                     z = "ลบสำเร็จ";
