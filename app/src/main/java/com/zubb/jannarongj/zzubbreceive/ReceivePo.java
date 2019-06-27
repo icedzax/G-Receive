@@ -226,10 +226,12 @@ public class ReceivePo extends AppCompatActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+
                     if(hideEdt.getText().toString().trim().contains("DEMO")){
-                        demo = hideEdt.getText().toString().trim().replace("DEMO","");
+                        demo = hideEdt.getText().toString().trim().replace("DEMO","").replace("*","").replaceAll("\r", "").replaceAll("\n", "").replaceAll("\t", "");
+
                     }else{
-                        demo = hideEdt.getText().toString().trim();
+                        demo = hideEdt.getText().toString().trim().replace("*","").replaceAll("\r", "").replaceAll("\n", "").replaceAll("\t", "");
                     }
                     insertSCAN(demo);
                 }
@@ -334,7 +336,7 @@ public class ReceivePo extends AppCompatActivity {
                         setErNf(1);
 
                     }else{
-                        String checkDup = "Select top 1 item_barcode,charge,bundle,user_add,add_stamp,location,vbeln,ponum,rmd_size,item_barcode from tbl_receive where item_barcode = '"+params[0].trim()+"' and vbeln = '"+h_vbeln+"' and posnr = '"+h_posnr+"'" ;
+                        String checkDup = "Select top 1 item_barcode,charge,bundle,user_add,add_stamp,location,vbeln,ponum,rmd_size,item_barcode from tbl_receive where item_barcode = '"+params[0].trim()+"' and ponum = '"+h_vbeln+"' " ;
 
                         PreparedStatement cd = con.prepareStatement(checkDup);
                         ResultSet cdps = cd.executeQuery();
