@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name">รับเข้า 2.3</string>
-    <string name="action_settings">รับเข้า 2.3</string>
-    <string name="title_activity_receive_transf">รับเข้า 2.3</string>
-    <string name="title_activity_transfer_list">รับเข้า 2.3</string>
-    <string name="title_activity_receive_po">รับเข้า 2.3</string>
-    <string name="title_activity_po_list">รับเข้า 2.3</string>
-    <string name="title_activity_login">รับเข้า 2.3</string>
-    <string name="title_activity_check_version">รับเข้า 2.3</string>
-    <string name="title_activity_receive_po_spn">รับเข้า 2.3</string>
-    <string name="title_activity_receive_transf_spn">รับเข้า 2.3</string>
+    <string name="app_name">รับเข้า 2.5</string>
+    <string name="action_settings">รับเข้า 2.5</string>
+    <string name="title_activity_receive_transf">รับเข้า 2.5</string>
+    <string name="title_activity_transfer_list">รับเข้า 2.5</string>
+    <string name="title_activity_receive_po">รับเข้า 2.5</string>
+    <string name="title_activity_po_list">รับเข้า 2.5</string>
+    <string name="title_activity_login">รับเข้า 2.5</string>
+    <string name="title_activity_check_version">รับเข้า 2.5</string>
+    <string name="title_activity_receive_po_spn">รับเข้า 2.5</string>
+    <string name="title_activity_receive_transf_spn">รับเข้า 2.5</string>
     <string name="title_activity_receive_list">ReceiveList</string>
 </resources>

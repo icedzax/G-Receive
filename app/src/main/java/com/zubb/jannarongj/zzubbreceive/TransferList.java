@@ -153,7 +153,13 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
                         i.putExtra("vbeln", (String) obj.get("VBELN"));
                         i.putExtra("posnr", (String) obj.get("POSNR"));
                         startActivity(i);
-                    }else{
+                    }else if (usrHelper.getPlant().equals("RS") || usrHelper.getUserName().equals("Wassana.k")){
+                        Intent i = new Intent(TransferList.this, ReceiveTransfP1.class);
+                        i.putExtra("vbeln", (String) obj.get("VBELN"));
+                        i.putExtra("posnr", (String) obj.get("POSNR"));
+                        startActivity(i);
+                    }
+                    else{
                         Intent i = new Intent(TransferList.this, ReceiveTransf.class);
                         i.putExtra("vbeln", (String) obj.get("VBELN"));
                         i.putExtra("posnr", (String) obj.get("POSNR"));
@@ -186,6 +192,8 @@ public class TransferList extends AppCompatActivity implements TextWatcher {
 
                     switch (usrHelper.getPlant()){
                         case "ZUBB" : plant = "  WERKS_TO in ('1010','9010')  ";
+                            break;
+                        case "RS" : plant = "  WERKS_TO in ('1010','9010')  ";
                             break;
                         case "SPN" : plant = "  WERKS_TO in ('1050','9050') ";
                             break;

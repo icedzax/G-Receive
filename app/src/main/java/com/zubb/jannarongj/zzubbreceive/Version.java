@@ -5,7 +5,7 @@ package com.zubb.jannarongj.zzubbreceive;
  */
 
 public class Version {
-    public String Version = "2.4";
+    public String Version = "2.5";
     public String name = "zubbreceive";
 
     public String getAppName() {

@@ -58,6 +58,14 @@
             android:label="@string/title_activity_receive_transf_spn"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".ReceivePoP1"
+            android:label="@string/title_activity_receive_po_spn"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReceiveTransfP1"
+            android:label="@string/title_activity_receive_transf_spn"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ReceiveList"
             android:label="@string/title_activity_receive_list"
             android:theme="@style/AppTheme.NoActionBar"></activity>

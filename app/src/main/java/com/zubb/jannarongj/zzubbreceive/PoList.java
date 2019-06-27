@@ -146,7 +146,13 @@ public class PoList extends AppCompatActivity implements TextWatcher {
                         Intent i = new Intent(PoList.this, ReceivePoSpn.class);
                         i.putExtra("vbeln", (String) obj.get("ponum"));
                         startActivity(i);
-                    }else{
+                    }else if (usrHelper.getPlant().equals("RS") || usrHelper.getUserName().equals("Wassana.k")){
+                        Intent i = new Intent(PoList.this, ReceivePoP1.class);
+                        i.putExtra("vbeln", (String) obj.get("ponum"));
+                        startActivity(i);
+                    }
+
+                    else{
                         Intent i = new Intent(PoList.this, ReceivePo.class);
                         i.putExtra("vbeln", (String) obj.get("ponum"));
                         startActivity(i);
